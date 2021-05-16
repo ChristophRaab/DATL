@@ -1,5 +1,5 @@
 # DATL
-Source Code for the ESANN 2021 Paper Submission 'Domain Adversarial Tangent Learning towards Interpretable Domain Adaptation'
+Source Code for the ESANN 2021 Submission 'Domain Adversarial Tangent Learning towards Interpretable Domain Adaptation'
 
 Contact: christoph.raab@fhws.de <br>
 If you got problems with this implementation, feel free to write me an email.
