@@ -1,4 +1,4 @@
-# DATSA
+# DATSA - Adversrial Domain Adaptation Network
 Source Code and for the Neurocomputing ESANN 2021 Special Issue 'Domain Adversarial Tangent Subspace Alignment for Explainable Domain Adaptation'
 
 Contact: christophraab@outlook.de <br>
