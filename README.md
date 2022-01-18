@@ -13,23 +13,25 @@ For a simple training-evaluation demo run with preset parameters, you can use th
 
 Train network via
 ```python train_datl.py --source_dir Office-31/images/amazon/ --target_dir Office-31/images/webcam ```<br>
-Note that source_dir and target_dir must be replaced with your dataset locations.<br>
+*Note that source_dir and target_dir must be replaced with your dataset locations.*<br>
 1. The script trains datl on amazon vs webcam given the specified image folder paths.
 2. See the Args-Parser parameter description in the file for the documentation of the parameters.
 3. The best model is stored in ```models/```.
 
 ## Explainability
 
-For the explainability results on **Office-31 A->W** run <br>  
-```python explainability.py --source amazon --target webcam```
+For the explainability results on **Office-31 A->W** do: <br>  
 
-1. The Siamese Translations (STs) are stored in ```results/´´´.
-2. T-Sne plots of STs and features are stored in ```plots/``´´.
+1. Replace dataset paths in line 11 and 12 in ```study.py```. 
+2. ```python explainability.py --source amazon --target webcam```
+3. The Siamese Translations (STs) are stored in ```results/´´´.
+4. T-Sne plots of STs and features are stored in ```plots/``´´.
 
 ## Reproduce Performance results
-For the explainability results on **Office-31** run <br>  
-```python study.py --dset office```<br>
-Results are stored as csv file ```results/```
+For the explainability results on **Office-31** do: <br>  
+1. Replace dataset paths in line 11 and 12 in ```study.py```. 
+2. ```python study.py --dset office```<br>
+3. Results are stored as csv file ```results/```
 
 ## Datasets
 ### Office-31
