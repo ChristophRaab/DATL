@@ -1,4 +1,4 @@
-# DATSA - Adversrial Domain Adaptation Network
+# DATSA - Adversarial Domain Adaptation Network
 Source Code and for the Neurocomputing ESANN 2021 Special Issue 'Domain Adversarial Tangent Subspace Alignment for Explainable Domain Adaptation'
 
 Contact: christophraab@outlook.de <br>
@@ -6,7 +6,7 @@ If you got problems with this implementation, feel free to write me an email.
 
 ## Installation
 1. Download the datasets with the links below.
-2. Run ```pip install -e .[all]``` to install the **DATL** package
+2. Run ```pip install -e .[all]``` to install the **DATL** package.
 
 ## Training
 For a simple training-evaluation demo run with preset parameters, you can use the following commands for training on **Office-31 A->W**<br>
