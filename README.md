@@ -11,13 +11,15 @@ If you got problems with this implementation, feel free to write me an email.
 For a simple training-evaluation demo run with preset parameters, you can use the following commands for training on
 
 **Office-31 A->W**<br>
-`train_datl.py --source_dir Office-31/images/amazon/ --target_dir Office-31/images/webcam
+Train network via
+```python train_datl.py --source_dir Office-31/images/amazon/ --target_dir Office-31/images/webcam ```
+1. The script trains datl on amazon vs webcam given the specified image folder paths
+2.   See the Args-Parser parameter description in the file for the documentation of the parameters.
+3. The trained models are stored in models
 
-The script trains datl on amazon vs webcam given the specified image folder paths
-1. The network can be trained via ```train_datl.p``` on any Office-31 combination
-   See the Args-Parser parameter description in the file for the documentation of the parameters.
+## Explainability
 
-2. The trained models are stored in models
+For the explainability results run 
 
 
 
