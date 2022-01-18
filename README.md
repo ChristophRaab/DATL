@@ -5,10 +5,7 @@ Contact: christoph.raab@fhws.de <br>
 If you got problems with this implementation, feel free to write me an email.
 
 ## Installation
-1. We provide the conda requirements in [conda_requirements.txt](https://github.com/ChristophRaab/DATL/blob/main/conda_requirements.txt) or pip requirements in [pip_requirements.txt](https://github.com/ChristophRaab/DATL/blob/main/pip_requirements.txt). After installation you should be able to run the code in this repository.
-
-2. First, download the dataset your are prefering. The link can be found below.
-3. After download, unzip the files and place the output in the desired directory.
+1. Download the datasets with the links below.
 
 ## Demo
 For a simple training-evaluation demo run with preset parameters, you can use the following commands for training on
@@ -24,5 +21,9 @@ The script trains datl on amazon vs webcam given the specified image folder path
 2. The trained models are stored in models
 
 
-### Office-31 Dataset
+## Datasets
+### Office-31
 Office-31 dataset can be found [here](https://drive.google.com/file/d/11nywfWdfdBi92Lr3y4ga2Cu4_-FpWKUC/view?usp=sharing).
+
+### Image-clef
+Image-Clef dataset can be found [here](https://drive.google.com/file/d/1lu1ouDoeucW8MgmaKVATwNt5JT7Uvk62/view?usp=sharing).
