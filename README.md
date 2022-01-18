@@ -8,9 +8,8 @@ If you got problems with this implementation, feel free to write me an email.
 1. Download the datasets with the links below.
 
 ## Training
-For a simple training-evaluation demo run with preset parameters, you can use the following commands for training on
+For a simple training-evaluation demo run with preset parameters, you can use the following commands for training on **Office-31 A->W**<br>
 
-**Office-31 A->W**<br>
 Train network via
 ```python train_datl.py --source_dir Office-31/images/amazon/ --target_dir Office-31/images/webcam ```
 1. The script trains datl on amazon vs webcam given the specified image folder paths
