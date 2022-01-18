@@ -1,3 +1,4 @@
+from cv2 import exp
 import torch
 from torch import nn
 import pandas as pd
@@ -62,9 +63,12 @@ if __name__ == "__main__":
                         help="Domain choice: amazon,webcam,dslr")
     parser.add_argument('--target',
                         type=str,
-                        default='amazon',
+                        default='webcam',
                         help="Domain choice: amazon,webcam,dslr")
-
+    parser.add_argument('--q',
+                        type=int,
+                        default=5,
+                        help="Number of Siamese Translations to be printed")
     args = parser.parse_args()
     accs = []
     plot_src_domain = args.source
@@ -75,49 +79,57 @@ if __name__ == "__main__":
         for target in dataset:
             target = target.split("/")[-2]
             if source != target:
+                try:
+                    feature_extractor = torch.load(
+                        "models/best_datl_sia_mpce_True_fe_" + source + "_" +
+                        target + ".pth.tar").to("cpu")
+                    classifier = torch.load(
+                        "models/best_datl_sia_mpce_True_classifier_" + source +
+                        "_" + target + ".pth.tar").to("cpu")
+                    discriminator = torch.load(
+                        "models/best_datl_sia_mpce_True_tangent_" + source +
+                        "_" + target + ".pth.tar").to("cpu")
+                    protos_per_domain = int(discriminator.protos.size(0) // 2)
 
-                feature_extractor = torch.load(
-                    "models/best_datl_sia_mpce_True_fe_" + source + "_" +
-                    target + ".pth.tar").to("cpu")
-                classifier = torch.load(
-                    "models/best_datl_sia_mpce_True_classifier_" + source +
-                    "_" + target + ".pth.tar").to("cpu")
-                discriminator = torch.load(
-                    "models/best_datl_sia_mpce_True_tangent_" + source + "_" +
-                    target + ".pth.tar").to("cpu")
-                protos_per_domain = int(discriminator.protos.size(0) // 2)
+                    with torch.no_grad():
+                        sprots = feature_extractor(
+                            discriminator.protos[0:31, :].to("cpu"))
+                        tprots = feature_extractor(
+                            discriminator.protos[31:, :].to("cpu"))
+                        dis = cosine_similarity(sprots, tprots)
+                        disk, idx = torch.max(dis, dim=0)
+                        _, spreds = nn.Softmax(1)(
+                            classifier(sprots)).detach().max(1)
+                        _, tpreds = nn.Softmax(1)(
+                            classifier(tprots)).detach().max(1)
+                        acc = discriminator.plabels[31:].cpu() == idx
+                        accs.append([
+                            source + "_vs_" + target,
+                            round(100 * (acc.sum() / protos_per_domain).item(),
+                                  2)
+                        ])
 
-                with torch.no_grad():
-                    sprots = feature_extractor(
-                        discriminator.protos[0:31, :].to("cpu"))
-                    tprots = feature_extractor(
-                        discriminator.protos[31:, :].to("cpu"))
-                    dis = cosine_similarity(sprots, tprots)
-                    disk, idx = torch.max(dis, dim=0)
-                    _, spreds = nn.Softmax(1)(
-                        classifier(sprots)).detach().max(1)
-                    _, tpreds = nn.Softmax(1)(
-                        classifier(tprots)).detach().max(1)
-                    acc = discriminator.plabels[31:].cpu() == idx
-                    accs.append([
-                        source + "_vs_" + target,
-                        round(100 * (acc.sum() / protos_per_domain).item(), 2)
-                    ])
+                    if source == plot_src_domain and target == plot_tgt_domain:
+                        model = Interpret(feature_extractor, classifier,
+                                          discriminator)
+                        model.train()
 
-                if source == plot_src_domain and target == plot_tgt_domain:
-                    model = Interpret(feature_extractor, classifier,
-                                      discriminator)
-                    model.train()
+                        for i in range(args.q):
+                            img = discriminator.protos[i, :].unsqueeze(0).to(
+                                "cpu")
+                            create_interpreable(model, img, i, "source")
 
-                    for i in range(31):
-                        img = discriminator.protos[i, :].unsqueeze(0).to("cpu")
-                        create_interpreable(model, img, i, "source")
+                            target_class = int(
+                                discriminator.plabels[i + 31].item())
+                            img = discriminator.protos[i + 31, :].unsqueeze(
+                                0).to("cpu")
+                            create_interpreable(
+                                model, img, target_class,
+                                "target_nearest_prototype_" +
+                                str(idx[i].item()))
+                except Exception:
+                    print("Dataset or Model for " + str(source) + " vs " +
+                          str(target) +
+                          " combination not available. Train it first!")
 
-                        target_class = int(discriminator.plabels[i +
-                                                                 31].item())
-                        img = discriminator.protos[i + 31, :].unsqueeze(0).to(
-                            "cpu")
-                        create_interpreable(
-                            model, img, target_class,
-                            "target_nearest_prototype_" + str(idx[i].item()))
     print(pd.DataFrame(accs))

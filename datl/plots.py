@@ -3,8 +3,19 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
-import matplotlib.markers as mmarkers
+from sklearn.decomposition import PCA
+import pandas as pd
+import cv2
+import os
+from itertools import cycle
 from datl.data_loader import load_data
+from numpy import linspace
+from scipy.interpolate import UnivariateSpline
+
+default_colors = [
+    '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b',
+    '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'
+]
 
 
 def plot_domains_with_siamodel(source_loader,
@@ -72,6 +83,29 @@ def plot_tsne_prototypes(x,
 
     if seperate_features:
         make_tsne_plot(y, name, d[:x.shape[0], :])
+
+
+def mscatter(x, y, z=None, ax=None, m=None, **kw):
+    import matplotlib.markers as mmarkers
+    ax = ax or plt.gca()
+
+    if z is not None:
+        sc = ax.scatter(x, y, z, **kw)
+    else:
+        sc = ax.scatter(x, y, **kw)
+
+    if (m is not None) and (len(m) == len(x)):
+        paths = []
+        for marker in m:
+            if isinstance(marker, mmarkers.MarkerStyle):
+                marker_obj = marker
+            else:
+                marker_obj = mmarkers.MarkerStyle(marker)
+            path = marker_obj.get_path().transformed(
+                marker_obj.get_transform())
+            paths.append(path)
+        sc.set_paths(paths)
+    return sc
 
 
 def min_max_norm_tsne(x):
@@ -161,25 +195,3 @@ def make_tsne_prototype_plot(x, y, py, name, dir, pmakers, d, proto_size,
                 bbox_inches='tight',
                 pad_inches=0.05)
     plt.close()
-
-
-def mscatter(x, y, z=None, ax=None, m=None, **kw):
-    ax = ax or plt.gca()
-
-    if z is not None:
-        sc = ax.scatter(x, y, z, **kw)
-    else:
-        sc = ax.scatter(x, y, **kw)
-
-    if (m is not None) and (len(m) == len(x)):
-        paths = []
-        for marker in m:
-            if isinstance(marker, mmarkers.MarkerStyle):
-                marker_obj = marker
-            else:
-                marker_obj = mmarkers.MarkerStyle(marker)
-            path = marker_obj.get_path().transformed(
-                marker_obj.get_transform())
-            paths.append(path)
-        sc.set_paths(paths)
-    return sc
