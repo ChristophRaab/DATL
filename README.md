@@ -6,12 +6,14 @@ If you got problems with this implementation, feel free to write me an email.
 
 ## Installation
 1. Download the datasets with the links below.
+2. Run ```pip install -e .[all]``` to install the **DATL** package
 
 ## Training
 For a simple training-evaluation demo run with preset parameters, you can use the following commands for training on **Office-31 A->W**<br>
 
 Train network via
-```python train_datl.py --source_dir Office-31/images/amazon/ --target_dir Office-31/images/webcam ```
+```python train_datl.py --source_dir Office-31/images/amazon/ --target_dir Office-31/images/webcam ```<br>
+Note that source_dir and target_dir must be replaced with your dataset locations.<br>
 1. The script trains datl on amazon vs webcam given the specified image folder paths.
 2. See the Args-Parser parameter description in the file for the documentation of the parameters.
 3. The best model is stored in ```models/```.
