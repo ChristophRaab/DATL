@@ -1,7 +1,7 @@
-# DATL
-Source Code for the ESANN 2021 Submission 'Domain Adversarial Tangent Learning towards Interpretable Domain Adaptation'
+# DATSA
+Source Code and for the Neurocomputing ESANN 2021 Special Issue 'Domain Adversarial Tangent Subspace Alignment for Explainable Domain Adaptation'
 
-Contact: christoph.raab@fhws.de <br>
+Contact: christophraab@outlook.de <br>
 If you got problems with this implementation, feel free to write me an email.
 
 ## Installation
