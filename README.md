@@ -24,8 +24,8 @@ For the explainability results on **Office-31 A->W** do: <br>
 
 1. Replace dataset paths in line 11 and 12 in ```study.py```. 
 2. ```cd datl && python explainability.py --source amazon --target webcam```
-3. The Siamese Translations (STs) are stored in ```results/´´´.
-4. T-Sne plots of STs and features are stored in ```plots/``´´.
+3. The Siamese Translations (STs) are stored in ```results```
+4. T-Sne plots of STs and features are stored in ```plots```
 
 ## Reproduce Performance results
 For the explainability results on **Office-31** do: <br>  
